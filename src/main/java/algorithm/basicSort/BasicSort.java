@@ -2,14 +2,18 @@ package algorithm.basicSort;
 
 public class BasicSort {
     public static void main(String[] args) {
-        int[] nums = {1, 3, 2, 4, 8, 2, 8, 9, 0, 4, 7, 6, 8, 9, 2, 5};
+        int[] nums = {1, 3, 2, 4, 8, 2, 8, 0, 4, 7, 6, 8, 9, 2, 5};
         selectSort(nums); //选择排序
-        int dichotomy = dichotomy(nums, 11);
-        for (int i = 0; i < nums.length; i++) {
-            System.out.print(nums[i]);
+//        int dichotomy = dichotomy(nums, 11);//二分查找
+        int i = dichotomyFindLeft(nums, 2);
+        for (int num : nums) {
+            System.out.print(num);
         }
         System.out.println();
-        System.out.println("index:" + dichotomy);
+        System.out.println(i);
+        if (i >= 0) {
+            System.out.println(nums[i]);
+        }
 //        bubbleSort(nums); //冒泡排序
 //        Arrays.stream(nums).forEach(System.out::println);
 //        oneOdd();
@@ -78,7 +82,7 @@ public class BasicSort {
     }
 
     //二分查找
-    //有序数组中找到>=num最左的位置 todo
+
     //有序数组中找到<=num最右的位置 todo
     //局部最小值问题 todo
     public static int dichotomy(int[] nums, int num) {
@@ -101,6 +105,33 @@ public class BasicSort {
         }
         return index;
     }
+
+    //有序数组中找到>=num最左的位置
+    public static int dichotomyFindLeft(int[] nums, int num) {
+        //0 2 3 5 5 6 7 8 8 8 8 9
+        int index = -1;
+        if (nums == null || nums.length <= 1) {
+            return index;
+        }
+        int begin = 0;
+        if (nums[0] >= num) {
+            return begin;
+        }
+        int end = nums.length - 1;
+        int middle;
+        while (begin <= end) {
+            middle = (end + begin) / 2;
+            if (nums[middle] >= num ) {
+                index = middle;
+                end = middle - 1;
+            }
+            if (nums[middle] < num) {
+                begin = middle + 1;
+            }
+        }
+        return index;
+    }
+
 
     private static void swap(int[] nums, int i, int j) {
         int num = nums[i];
