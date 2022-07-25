@@ -78,6 +78,9 @@ public class BasicSort {
     }
 
     //二分查找
+    //有序数组中找到>=num最左的位置 todo
+    //有序数组中找到<=num最右的位置 todo
+    //局部最小值问题 todo
     public static int dichotomy(int[] nums, int num) {
         int begin = 0;
         int end = nums.length - 1;
