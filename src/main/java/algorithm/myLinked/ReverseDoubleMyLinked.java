@@ -1,4 +1,4 @@
-package algorithm.MyLinked;
+package algorithm.myLinked;
 
 public class ReverseDoubleMyLinked {
 
