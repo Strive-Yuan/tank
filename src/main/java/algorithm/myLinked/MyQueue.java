@@ -37,6 +37,7 @@ public class MyQueue {
             return curr;
         }
         head = head.next;
+        size--;
         return curr;
     }
 
