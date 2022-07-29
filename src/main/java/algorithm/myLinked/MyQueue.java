@@ -22,11 +22,10 @@ public class MyQueue {
         Node node = new Node(data);
         if (head == null) {
             head = node;
-            tail = node;
         } else {
             tail.next = node;
-            tail = node;
         }
+        tail = node;
         size++;
     }
 
