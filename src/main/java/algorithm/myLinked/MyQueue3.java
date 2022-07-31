@@ -25,11 +25,13 @@ public class MyQueue3 {
         Node end = getGroupTail(start, k);
         reverse(start, end);
         myQueue.head = end;
-
         Node lastEnd = start;
         while (lastEnd.next != null) {
             start = lastEnd.next;
             end = getGroupTail(start, k);
+            if (end == null) {
+                return;
+            }
             reverse(start, end);
             lastEnd.next = end;
             lastEnd = start;
