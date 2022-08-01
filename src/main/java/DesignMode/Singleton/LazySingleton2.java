@@ -1,27 +1,23 @@
 package DesignMode.Singleton;
 
 /**
- * 懒汉式、
- * 缺点：在并发场景中可能会创建多个对象
+ * 懒汉式
+ * 在第一种写法的基础上进行优化
+ * 缺点: 锁粒度太大，效率降低
  */
-public class LazySingleton {
+public class LazySingleton2 {
+    private static LazySingleton2 lazySingleton;
 
-    private static LazySingleton lazySingleton;
-
-    private LazySingleton() {
+    private LazySingleton2() {
     }
 
-    public static LazySingleton getInstance() {
+    public static synchronized LazySingleton2 getInstance() {
         if (lazySingleton == null) {
-            lazySingleton = new LazySingleton();
+            lazySingleton = new LazySingleton2();
         }
         return lazySingleton;
     }
 
-
-    /**
-     * 测试：在并发场景中可能会创建多个对象
-     */
     public static void main(String[] args) {
         for (int i = 0; i < 100; i++) {
             new Thread(() -> {
@@ -30,7 +26,7 @@ public class LazySingleton {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(LazySingleton.getInstance());
+                System.out.println(LazySingleton2.getInstance());
             }).start();
         }
     }
