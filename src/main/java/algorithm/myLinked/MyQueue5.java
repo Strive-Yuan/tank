@@ -1,7 +1,7 @@
 package algorithm.myLinked;
 
 /**
- * 两个有序联表的合并
+ * 两个有序链表的合并
  */
 public class MyQueue5 {
 
@@ -10,7 +10,6 @@ public class MyQueue5 {
     public Node tail;
 
     public static void main(String[] args) {
-        System.out.println(-2 >>> 1);
         MyQueue5 myQueue = new MyQueue5();
         myQueue.add(4);
         myQueue.add(6);
@@ -18,11 +17,25 @@ public class MyQueue5 {
         MyQueue5 myQueue2 = new MyQueue5();
         myQueue2.add(3);
         myQueue2.add(7);
-        Node head = myQueue.head.data > myQueue2.head.data ? myQueue.head : myQueue2.head;
-
-//        while (myQueue.head != null) {
-//
-//        }
+        Node head = myQueue.head.data < myQueue2.head.data ? myQueue.head : myQueue2.head;
+        Node cur1 = head.next;
+        Node cur2 = head == myQueue.head ? myQueue2.head : myQueue.head;
+        Node pre = head;
+        while (cur1 != null && cur2 != null) {
+            if (cur1.data < cur2.data) {
+                pre.next = cur1;
+                cur1 = cur1.next;
+            } else {
+                pre.next = cur2;
+                cur2 = cur2.next;
+            }
+            pre = pre.next;
+        }
+        pre.next = cur1 != null ? cur1 : cur2;
+        while (head != null) {
+            System.out.println(head.data);
+            head = head.next;
+        }
     }
 
     class Node {
