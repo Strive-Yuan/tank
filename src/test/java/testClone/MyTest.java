@@ -11,14 +11,42 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class MyTest {
     public static void main(String[] args) {
-        ReentrantLock reentrantLock = new ReentrantLock();
-        Phaser phaser = new Phaser();
-        ReentrantReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-        readWriteLock.readLock();
-        Semaphore semaphore = new Semaphore(1,true);
-        Exchanger<String> exchanger = new Exchanger<>();
-        System.out.println(1<<16);
-        Thread t1 = new Thread(() -> System.out.println(111));
-        LockSupport.park();
+//        StringBuffer str1 = new StringBuffer("good");
+//        StringBuffer str2 = new StringBuffer("bad");
+//        change(str1,str2);
+//        System.out.println(str1);
+//        System.out.println(str2);
+        String str = "[\n" +
+                "    {\n" +
+                "        \"sp_number\": \"202208100028\",\n" +
+                "        \"sp_title\": {\n" +
+                "            \"data\": [\n" +
+                "                {\n" +
+                "                    \"text\": \"补卡申请\",\n" +
+                "                    \"lang\": \"zh_CN\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        },\n" +
+                "        \"sp_description\": {\n" +
+                "            \"data\": [\n" +
+                "                {\n" +
+                "                    \"text\": \"08/09 18:00\",\n" +
+                "                    \"lang\": \"zh_CN\"\n" +
+                "                }\n" +
+                "            ]\n" +
+                "        }\n" +
+                "    }\n" +
+                "]";
+
     }
+
+
+    private static void change(StringBuffer str11, StringBuffer str12){
+        str12 = str11;
+        str11 = new StringBuffer("new world");
+        str12.append(" new world");
+    }
+
+
+
 }
