@@ -5,8 +5,13 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandler;
+import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.CharsetUtil;
+import org.apache.commons.lang3.CharSetUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -60,7 +65,7 @@ public class MyNetty {
     @Test
     public void loopExecute() throws IOException {
         //group  线程池
-        NioEventLoopGroup selector = new NioEventLoopGroup(2);
+        NioEventLoopGroup selector = new NioEventLoopGroup(1);
         selector.execute(() -> {
             try {
                 for (; ; ) {
@@ -94,13 +99,79 @@ public class MyNetty {
         NioSocketChannel clint = new NioSocketChannel();
 
         selector.register(clint); //epoll_ctl(5,ADD,3)
+
+        //reactor 异步得特征
         ChannelFuture connect = clint.connect(new InetSocketAddress("192.168.80.132", 9090));
         ChannelFuture sync = connect.sync();
+
         ByteBuf byteBuf = Unpooled.copiedBuffer("hello server".getBytes());
         ChannelFuture send = clint.writeAndFlush(byteBuf);
         send.sync();
 
+        ChannelPipeline p = clint.pipeline();
+        p.addLast(new MyInHandler());
+
         sync.channel().closeFuture().sync();
         System.out.println("client over ...");
+
+    }
+}
+class MyInHandler implements ChannelInboundHandler{
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext channelHandlerContext) throws Exception {
+        System.out.println("client registed....");
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext channelHandlerContext) throws Exception {
+
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext channelHandlerContext) throws Exception {
+        System.out.println("client active....");
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext channelHandlerContext) throws Exception {
+
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) throws Exception {
+        ByteBuf buf = (ByteBuf) msg;
+        CharSequence str = buf.readCharSequence(buf.readableBytes(), CharsetUtil.UTF_8);
+        System.out.println(str);
+    }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext channelHandlerContext) throws Exception {
+
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
+
+    }
+
+    @Override
+    public void channelWritabilityChanged(ChannelHandlerContext channelHandlerContext) throws Exception {
+
+    }
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext channelHandlerContext) throws Exception {
+
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext channelHandlerContext) throws Exception {
+
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable throwable) throws Exception {
+
     }
 }
