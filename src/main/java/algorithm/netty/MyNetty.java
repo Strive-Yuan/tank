@@ -102,10 +102,12 @@ public class MyNetty {
 
         //reactor 异步得特征
         ChannelFuture connect = clint.connect(new InetSocketAddress("192.168.80.132", 9090));
+        //等待连接成功
         ChannelFuture sync = connect.sync();
 
         ByteBuf byteBuf = Unpooled.copiedBuffer("hello server".getBytes());
         ChannelFuture send = clint.writeAndFlush(byteBuf);
+        //发送数据也是异步的
         send.sync();
 
         ChannelPipeline p = clint.pipeline();
