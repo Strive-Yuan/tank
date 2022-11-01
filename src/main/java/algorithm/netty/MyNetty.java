@@ -1,12 +1,16 @@
 package algorithm.netty;
 
 
+import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.buffer.UnpooledByteBufAllocator;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import org.junit.Test;
@@ -23,15 +27,15 @@ public class MyNetty {
 //        ByteBuf buffer = UnpooledByteBufAllocator.DEFAULT.heapBuffer(8, 20);
         ByteBuf buffer = UnpooledByteBufAllocator.DEFAULT.directBuffer(8, 20);
         print(buffer);
-        buffer.writeBytes(new byte[]{1,2,3,4});
+        buffer.writeBytes(new byte[]{1, 2, 3, 4});
         print(buffer);
-        buffer.writeBytes(new byte[]{1,2,3,4});
+        buffer.writeBytes(new byte[]{1, 2, 3, 4});
         print(buffer);
-        buffer.writeBytes(new byte[]{1,2,3,4});
+        buffer.writeBytes(new byte[]{1, 2, 3, 4});
         print(buffer);
-        buffer.writeBytes(new byte[]{1,2,3,4});
+        buffer.writeBytes(new byte[]{1, 2, 3, 4});
         print(buffer);
-        buffer.writeBytes(new byte[]{1,2,3,4});
+        buffer.writeBytes(new byte[]{1, 2, 3, 4});
         print(buffer);
     }
 
@@ -122,8 +126,33 @@ public class MyNetty {
         thread.register(server);
         ChannelFuture bind = server.bind(new InetSocketAddress("192.168.1.131", 9090));
         ChannelPipeline pipeline = server.pipeline();
-        pipeline.addLast(new MyAcceptHandler(thread,new MyInHandler())); //accecpt 接受客户端 并且注册register
+        pipeline.addLast(new MyAcceptHandler(thread, new ChannelInit())); //accecpt 接受客户端 并且注册register
+//        pipeline.addLast(new MyAcceptHandler(thread,new MyInHandler())); //accecpt 接受客户端 并且注册register
         bind.sync().channel().closeFuture().sync();
         System.out.println("server close....");
+    }
+
+
+    @Test
+    public void nettyClient() throws InterruptedException {
+        NioEventLoopGroup group = new NioEventLoopGroup(1);
+        Bootstrap bs = new Bootstrap();
+        ChannelFuture connect = bs.group(group)
+                .channel(NioSocketChannel.class)
+//                .handler(new ChannelInit())
+                .handler(new ChannelInitializer<SocketChannel>() {
+                    @Override
+                    protected void initChannel(SocketChannel socketChannel) {
+                        ChannelPipeline pipeline = socketChannel.pipeline();
+                        pipeline.addLast(new MyInHandler());
+                    }
+                })
+                .connect(new InetSocketAddress("192.168.80.132", 9090));
+        Channel client = connect.sync().channel();
+        ByteBuf byteBuf = Unpooled.copiedBuffer("hello server".getBytes());
+        ChannelFuture send = client.writeAndFlush(byteBuf);
+        //发送数据也是异步的
+        send.sync();
+        client.closeFuture().sync();
     }
 }
