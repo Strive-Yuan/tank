@@ -5,13 +5,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.CharsetUtil;
-import org.apache.commons.lang3.CharSetUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -117,63 +114,16 @@ public class MyNetty {
         System.out.println("client over ...");
 
     }
-}
-class MyInHandler implements ChannelInboundHandler{
 
-    @Override
-    public void channelRegistered(ChannelHandlerContext channelHandlerContext) throws Exception {
-        System.out.println("client registed....");
-    }
-
-    @Override
-    public void channelUnregistered(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    @Override
-    public void channelActive(ChannelHandlerContext channelHandlerContext) throws Exception {
-        System.out.println("client active....");
-    }
-
-    @Override
-    public void channelInactive(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    @Override
-    public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
-        CharSequence str = buf.readCharSequence(buf.readableBytes(), CharsetUtil.UTF_8);
-        System.out.println(str);
-    }
-
-    @Override
-    public void channelReadComplete(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    @Override
-    public void userEventTriggered(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
-
-    }
-
-    @Override
-    public void channelWritabilityChanged(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    @Override
-    public void handlerAdded(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    @Override
-    public void handlerRemoved(ChannelHandlerContext channelHandlerContext) throws Exception {
-
-    }
-
-    @Override
-    public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable throwable) throws Exception {
-
+    @Test
+    public void serverMode() throws Exception {
+        NioEventLoopGroup thread = new NioEventLoopGroup(1);
+        NioServerSocketChannel server = new NioServerSocketChannel();
+        thread.register(server);
+        ChannelFuture bind = server.bind(new InetSocketAddress("192.168.1.131", 9090));
+        ChannelPipeline pipeline = server.pipeline();
+        pipeline.addLast(new MyAcceptHandler(thread,new MyInHandler())); //accecpt 接受客户端 并且注册register
+        bind.sync().channel().closeFuture().sync();
+        System.out.println("server close....");
     }
 }
