@@ -57,8 +57,21 @@ public class MyRPC {
         new Thread(this::startServer).start();
         System.out.println("server started.....");
 
-        Car car = proxyGet(Car.class); //动态代理
-        car.msg("hello car");
+        Thread[] threads = new Thread[20];
+        for (int i = 0; i < threads.length; i++) {
+            threads[i] = new Thread(() -> {
+                Car car = proxyGet(Car.class); //动态代理
+                car.msg("hello car");
+            });
+        }
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 //        Fly fly = proxyGet(Fly.class); //动态代理
 //        fly.msg("hello fly");
@@ -96,6 +109,7 @@ public class MyRPC {
                 oout = new ObjectOutputStream(out);
                 oout.writeObject(header);
                 byte[] msgHeader = out.toByteArray();
+//                System.out.println("msgHeader:" + msgHeader.length);  System.out.println("msgHeader:" + msgHeader.length);
 
                 //3.连接池：取得连接
                 ClientFactory factory = ClientFactory.getFactory();
@@ -145,8 +159,9 @@ class ServerRequestHandler extends ChannelInboundHandlerAdapter {
         ByteBuf buf = (ByteBuf) msg;
         ByteBuf sendBuf = buf.copy();
 //        System.out.println("可读:" + buf.readableBytes());
-        if (buf.readableBytes() >= 160) {
-            byte[] bytes = new byte[160];
+        System.out.println("开始:" + buf.readableBytes());
+        if (buf.readableBytes() >= 94) {
+            byte[] bytes = new byte[94];
             buf.readBytes(bytes);
             ByteArrayInputStream in = new ByteArrayInputStream(bytes);
             ObjectInputStream oin = new ObjectInputStream(in);
@@ -160,7 +175,9 @@ class ServerRequestHandler extends ChannelInboundHandlerAdapter {
                 ByteArrayInputStream din = new ByteArrayInputStream(data);
                 ObjectInputStream doin = new ObjectInputStream(din);
                 MyContent content = (MyContent) doin.readObject();
-                System.out.println(content.getName());
+                System.out.println("name:" + content.getName());
+            } else {
+                System.out.println("结束:" + buf.readableBytes());
             }
         }
         ChannelFuture channelFuture = ctx.writeAndFlush(sendBuf);

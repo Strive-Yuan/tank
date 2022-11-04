@@ -126,7 +126,7 @@ public class MyNetty {
         NioEventLoopGroup thread = new NioEventLoopGroup(1);
         NioServerSocketChannel server = new NioServerSocketChannel();
         thread.register(server);
-        ChannelFuture bind = server.bind(new InetSocketAddress("192.168.1.131", 9090));
+        ChannelFuture bind = server.bind(new InetSocketAddress("ip", 9090));
         ChannelPipeline pipeline = server.pipeline();
         pipeline.addLast(new MyAcceptHandler(thread, new ChannelInit())); //accecpt 接受客户端 并且注册register
 //        pipeline.addLast(new MyAcceptHandler(thread,new MyInHandler())); //accecpt 接受客户端 并且注册register

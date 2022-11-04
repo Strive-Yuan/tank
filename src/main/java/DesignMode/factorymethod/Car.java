@@ -18,20 +18,22 @@ public class Car implements Vehicle {
 
 
     public static void main(String[] args) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.US);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        LocalDateTime localDateTime = LocalDateTime.of(2022, 10, 31, 0, 0, 0);
+        LocalDateTime localDateTime = LocalDateTime.of(2022, 11, 1, 0, 0, 0).plusDays(-1);
         Date start = Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
         String startDate = sdf.format(start);
-        System.out.println(startDate);
-        LocalDateTime localDateTimeEnd = LocalDateTime.of(2022, 10, 31, 23, 59, 59);
+        LocalDateTime localDateTimeEnd = LocalDateTime.of(2022, 11, 1, 23, 59, 59).plusDays(-1);
         Date end = Date.from(localDateTimeEnd.atZone(ZoneId.systemDefault()).toInstant());
         String endDate = sdf.format(end);
+        System.out.println(startDate);
         System.out.println(endDate);
 
-                //"start_date" : "2022-10-30T16:00:00+0000",
-                //"end_date"   : "2022-10-31T15:23:23+0000",
+        //"start_date" : "2022-10-30T16:00:00+0000",
+        //"end_date"   : "2022-10-31T15:23:23+0000",
 
 
     }
+
+
 }
