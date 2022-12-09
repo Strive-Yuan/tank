@@ -1,21 +1,23 @@
 package algorithm.basicSort;
 
+import java.util.Arrays;
+
 public class BasicSort {
     public static void main(String[] args) {
         int[] nums = {1, 3, 2, 4, 8, 2, 8, 0, 4, 7, 6, 8, 9, 2, 5};
-        selectSort(nums); //选择排序
+//        selectSort(nums); //选择排序
 //        int dichotomy = dichotomy(nums, 11);//二分查找
-        int i = dichotomyFindLeft(nums, 2);
-        for (int num : nums) {
-            System.out.print(num);
-        }
-        System.out.println();
-        System.out.println(i);
-        if (i >= 0) {
-            System.out.println(nums[i]);
-        }
-//        bubbleSort(nums); //冒泡排序
-//        Arrays.stream(nums).forEach(System.out::println);
+//        int i = dichotomyFindLeft(nums, 2);
+//        for (int num : nums) {
+//            System.out.print(num);
+//        }
+//        System.out.println();
+//        System.out.println(i);
+//        if (i >= 0) {
+//            System.out.println(nums[i]);
+//        }
+        bubbleSort(nums); //冒泡排序
+        Arrays.stream(nums).forEach(System.out::print);
 //        oneOdd();
 //        twoOdd();
     }
@@ -53,13 +55,14 @@ public class BasicSort {
 
     //冒泡排序
     public static void bubbleSort(int[] nums) {
+//        int[] nums = {1, 3, 2, 4, 8, 2, 8, 0, 4, 7, 6, 8, 9, 2, 5};
         if (nums == null || nums.length <= 1) {
             return;
         }
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] > nums[j]) {
-                    swap(nums, i, j);
+        for (int i = 0; i < nums.length - 1; i++) {
+            for (int j = 0; j < nums.length - i - 1; j++) {
+                if (nums[j] < nums[j + 1]) {
+                    swap(nums, j, j + 1);
                 }
             }
         }
@@ -121,7 +124,7 @@ public class BasicSort {
         int middle;
         while (begin <= end) {
             middle = (end + begin) / 2;
-            if (nums[middle] >= num ) {
+            if (nums[middle] >= num) {
                 index = middle;
                 end = middle - 1;
             }
