@@ -172,4 +172,7 @@ public class BasicSort {
         // 利用先前的x进行异或运算得到另一个，即利用自反性
         return new int[]{res, x ^ res};
     }
+
+
+
 }
