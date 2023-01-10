@@ -3,6 +3,6 @@ server:
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://119.28.17.102/co3?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&rewriteBatchedStatements=true
-        username: co3
-        password: co3@2021
+        url: jdbc:mysql://localhost:3306/ccjk
+        username: root
+        password: yjhui
