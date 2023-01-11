@@ -1,4 +1,4 @@
-package com;
+package com.redis;
 
 public class Person {
     private String name;

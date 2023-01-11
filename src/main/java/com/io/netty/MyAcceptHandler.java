@@ -1,4 +1,4 @@
-package com.algorithm.netty;
+package com.io.netty;
 
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;

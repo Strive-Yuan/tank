@@ -1,4 +1,4 @@
-package com.algorithm.io;
+package com.io;
 
 public class MainThread {
 

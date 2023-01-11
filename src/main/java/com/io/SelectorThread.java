@@ -1,4 +1,4 @@
-package com.algorithm.io;
+package com.io;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;

@@ -1,4 +1,4 @@
-package com.algorithm.netty;
+package com.io.netty;
 
 
 import io.netty.bootstrap.Bootstrap;
