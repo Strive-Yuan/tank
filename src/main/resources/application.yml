@@ -1,6 +1,11 @@
 server:
     port: 8080
 spring:
+    redis:
+        host: 192.168.80.132
+        port: 6379
+        connect-timeout: 5000
+        password: 123456
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/ccjk
