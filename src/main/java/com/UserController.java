@@ -17,6 +17,7 @@ public class UserController {
 
     @GetMapping("findAll")
     public String findAll() {
+        System.out.println("请求进来了!");
         return "yjhui";
     }
 }
