@@ -9,7 +9,5 @@ import org.springframework.context.ConfigurableApplicationContext;
 public class MyAlgorithmApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext cxt = SpringApplication.run(MyAlgorithmApplication.class, args);
-        RedisDemo redisDemo = cxt.getBean(RedisDemo.class);
-        redisDemo.setString();
     }
 }
