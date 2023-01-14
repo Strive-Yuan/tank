@@ -22,7 +22,7 @@ public class SecurityController {
 
         // 生成token
         String token = UUID.randomUUID().toString();
-        return  new Token("登录成功", token, user.userId, user.status, true);
+        return  new Token("登录成功", token, 1, UserStatus.Enabled, true);
     }
 
     public static class Token {
