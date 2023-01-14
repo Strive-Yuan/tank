@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 public class SecurityController {
 
     @GetMapping("api/login")
-    public Token login(User user) {
+    public Token login() {
         System.out.println("请求进来了!");
 
         // 生成token
