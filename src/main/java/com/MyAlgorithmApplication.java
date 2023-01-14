@@ -7,6 +7,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class MyAlgorithmApplication {
     public static void main(String[] args) {
-        ConfigurableApplicationContext cxt = SpringApplication.run(MyAlgorithmApplication.class, args);
+        SpringApplication.run(MyAlgorithmApplication.class, args);
     }
 }
