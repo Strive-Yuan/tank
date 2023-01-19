@@ -1,28 +1,38 @@
 package com.api.controller;
 
+import com.api.exception.ApiException;
+import com.api.exception.ErrorCode;
+import com.api.exception.GlobalExceptionHandler;
 import com.api.pojo.User;
 import com.api.pojo.UserStatus;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.api.server.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+
 
 @RestController
 public class SecurityController {
+    private final static Logger logger = LoggerFactory.getLogger(SecurityController.class);
 
-    @GetMapping("api/login")
-    public Token login() {
-        System.out.println("请求进来了!");
+    @Resource
+    UserService userService;
 
+    @PostMapping("api/login")
+    public Token login(@RequestBody User user) throws ApiException {
+        logger.info("进入登录接口!");
+        User oldUser = userService.selectByUserNameAndPassword(user.username, user.password);
+        if (Objects.isNull(oldUser)) {
+            throw new ApiException(ErrorCode.NOT_FOUNT, "用户不存在！");
+        }
         // 生成token
         String token = UUID.randomUUID().toString();
-        return  new Token("登录成功", token, 1, UserStatus.Enabled, true);
+        return new Token("登录成功", token, 1, UserStatus.Enabled, true);
     }
 
     public static class Token {
