@@ -62,8 +62,8 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(HubServerException.class)
-	public ResponseEntity<ServerResponseEntity<Object>> mall4cloudExceptionHandler(HubServerException e) {
-		logger.error("mall4cloudExceptionHandler", e);
+	public ResponseEntity<ServerResponseEntity<Object>> globalExceptionHandler(HubServerException e) {
+		logger.error("GlobalExceptionHandler", e);
 
 		ResponseEnum responseEnum = e.getResponseEnum();
 		// 失败返回失败消息 + 状态码
