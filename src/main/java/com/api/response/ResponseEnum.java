@@ -34,7 +34,7 @@ public enum ResponseEnum {
 	/**
 	 * 服务器出了点小差
 	 */
-	EXCEPTION("A00005", "服务器出了点小差"),
+	EXCEPTION("A00005", "Internal Server Error"),
 
 	/**
 	 * 数据异常

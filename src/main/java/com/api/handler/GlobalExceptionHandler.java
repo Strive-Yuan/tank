@@ -28,59 +28,55 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-	@ExceptionHandler({ MethodArgumentNotValidException.class, BindException.class })
-	public ResponseEntity<ServerResponseEntity<List<String>>> methodArgumentNotValidExceptionHandler(Exception e) {
-		logger.error("methodArgumentNotValidExceptionHandler", e);
-		List<FieldError> fieldErrors = null;
-		if (e instanceof MethodArgumentNotValidException) {
-			fieldErrors = ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors();
-		}
-		if (e instanceof BindException) {
-			fieldErrors = ((BindException) e).getBindingResult().getFieldErrors();
-		}
-		if (fieldErrors == null) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.body(ServerResponseEntity.fail(ResponseEnum.METHOD_ARGUMENT_NOT_VALID));
-		}
+    @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
+    public ResponseEntity<ServerResponseEntity<List<String>>> methodArgumentNotValidExceptionHandler(Exception e) {
+        logger.error("methodArgumentNotValidExceptionHandler", e);
+        List<FieldError> fieldErrors = null;
+        if (e instanceof MethodArgumentNotValidException) {
+            fieldErrors = ((MethodArgumentNotValidException) e).getBindingResult().getFieldErrors();
+        }
+        if (e instanceof BindException) {
+            fieldErrors = ((BindException) e).getBindingResult().getFieldErrors();
+        }
+        if (fieldErrors == null) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(ServerResponseEntity.fail(ResponseEnum.METHOD_ARGUMENT_NOT_VALID));
+        }
 
-		List<String> defaultMessages = new ArrayList<>(fieldErrors.size());
-		for (FieldError fieldError : fieldErrors) {
-			defaultMessages.add(fieldError.getField() + ":" + fieldError.getDefaultMessage());
-		}
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(ServerResponseEntity.fail(ResponseEnum.METHOD_ARGUMENT_NOT_VALID, defaultMessages));
-	}
+        List<String> defaultMessages = new ArrayList<>(fieldErrors.size());
+        for (FieldError fieldError : fieldErrors) {
+            defaultMessages.add(fieldError.getField() + ":" + fieldError.getDefaultMessage());
+        }
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ServerResponseEntity.fail(ResponseEnum.METHOD_ARGUMENT_NOT_VALID, defaultMessages));
+    }
 
-	@ExceptionHandler({ HttpMessageNotReadableException.class })
-	public ResponseEntity<ServerResponseEntity<List<FieldError>>> methodArgumentNotValidExceptionHandler(
-			HttpMessageNotReadableException e) {
-		logger.error("methodArgumentNotValidExceptionHandler", e);
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(ServerResponseEntity.fail(ResponseEnum.HTTP_MESSAGE_NOT_READABLE));
-	}
+    @ExceptionHandler({HttpMessageNotReadableException.class})
+    public ResponseEntity<ServerResponseEntity<List<FieldError>>> methodArgumentNotValidExceptionHandler(
+            HttpMessageNotReadableException e) {
+        logger.error("methodArgumentNotValidExceptionHandler", e);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(ServerResponseEntity.fail(ResponseEnum.HTTP_MESSAGE_NOT_READABLE));
+    }
 
-	@ExceptionHandler(HubServerException.class)
-	public ResponseEntity<ServerResponseEntity<Object>> globalExceptionHandler(HubServerException e) {
-		logger.error("GlobalExceptionHandler", e);
+    @ExceptionHandler(HubServerException.class)
+    public ResponseEntity<ServerResponseEntity<Object>> globalExceptionHandler(HubServerException e) {
+        logger.error("GlobalExceptionHandler", e);
 
-		ResponseEnum responseEnum = e.getResponseEnum();
-		// 失败返回失败消息 + 状态码
-		if (responseEnum != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(ServerResponseEntity.fail(responseEnum, e.getObject()));
-		}
-		// 失败返回消息 状态码固定为直接显示消息的状态码
-		return ResponseEntity.status(HttpStatus.OK).body(ServerResponseEntity.showFailMsg(e.getMessage()));
-	}
+        ResponseEnum responseEnum = e.getResponseEnum();
+        // 失败返回失败消息 + 状态码
+        if (responseEnum != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(ServerResponseEntity.fail(responseEnum, e.getObject()));
+        }
+        // 失败返回消息 状态码固定为直接显示消息的状态码
+        return ResponseEntity.status(HttpStatus.OK).body(ServerResponseEntity.showFailMsg(e.getMessage()));
+    }
 
-//	@ExceptionHandler(Exception.class)
-//	public ResponseEntity<ServerResponseEntity<Object>> exceptionHandler(Exception e) throws TransactionException {
-//		logger.error("exceptionHandler", e);
-//		logger.info("RootContext.getXID(): " + RootContext.getXID());
-//		if (StrUtil.isNotBlank(RootContext.getXID())) {
-//			GlobalTransactionContext.reload(RootContext.getXID()).rollback();
-//		}
-//		return ResponseEntity.status(HttpStatus.OK).body(ServerResponseEntity.fail(ResponseEnum.EXCEPTION));
-//	}
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ServerResponseEntity<Object>> exceptionHandler(Exception e) {
+        logger.error("GlobalExceptionHandler", e);
+        return ResponseEntity.status(HttpStatus.OK).body(ServerResponseEntity.fail(ResponseEnum.EXCEPTION));
+    }
 }

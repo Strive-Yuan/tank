@@ -3,6 +3,7 @@ package com.api.controller;
 import com.api.exception.HubServerException;
 import com.api.pojo.User;
 import com.api.pojo.UserStatus;
+import com.api.response.ServerResponseEntity;
 import com.api.server.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ public class SecurityController {
     UserService userService;
 
     @PostMapping("api/login")
-    public Token login(@RequestBody User user) {
+    public ServerResponseEntity<Token> login(@RequestBody User user) {
         logger.info("进入登录接口!");
         User oldUser = userService.selectByUserNameAndPassword(user.username, user.password);
         if (Objects.isNull(oldUser)) {
@@ -29,7 +30,8 @@ public class SecurityController {
         }
         // 生成token
         String token = UUID.randomUUID().toString();
-        return new Token("登录成功", token, 1, UserStatus.Enabled, true);
+
+        return ServerResponseEntity.success(new Token("登录成功", token, 1, UserStatus.Enabled, true));
     }
 
     public static class Token {
