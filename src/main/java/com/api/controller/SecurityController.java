@@ -15,13 +15,14 @@ import java.util.UUID;
 
 
 @RestController
+@RequestMapping("/api")
 public class SecurityController {
     private final static Logger logger = LoggerFactory.getLogger(SecurityController.class);
 
     @Resource
     UserService userService;
 
-    @PostMapping("api/login")
+    @PostMapping("/login")
     public ServerResponseEntity<Token> login(@RequestBody User user) {
         logger.info("进入登录接口!");
         User oldUser = userService.selectByUserNameAndPassword(user.username, user.password);
@@ -30,7 +31,6 @@ public class SecurityController {
         }
         // 生成token
         String token = UUID.randomUUID().toString();
-
         return ServerResponseEntity.success(new Token("登录成功", token, 1, UserStatus.Enabled, true));
     }
 
