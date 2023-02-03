@@ -7,7 +7,6 @@ import com.api.response.ServerResponseEntity;
 import com.api.server.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -16,13 +15,14 @@ import java.util.UUID;
 
 
 @RestController
+@RequestMapping("/api")
 public class SecurityController {
     private final static Logger logger = LoggerFactory.getLogger(SecurityController.class);
 
     @Resource
     UserService userService;
 
-    @PostMapping("api/login")
+    @PostMapping("/login")
     public ServerResponseEntity<Token> login(@RequestBody User user) {
         logger.info("进入登录接口!");
         User oldUser = userService.selectByUserNameAndPassword(user.username, user.password);
