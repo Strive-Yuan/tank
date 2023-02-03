@@ -1,4 +1,21 @@
 com.module.redis
+Redis安装
+1.make 
+  -yum install gcc 安装C的编译器
+  -make distclean 当make失败后重新执行make前需执行此命令
+2.make install PREFIX=/opt/redis/redis_install
+3.vim /ect/profile  配置环境变量
+  -export REDIS_HOME=/opt/redis/redis_install
+  -export PATH=$REDIS_HOME/bin:$PATH
+4.source /etc/profile
+5.cd utils 
+6.执行./install_server.sh (可以执行一次或多次)
+   1)一个物理机中可以又多个redis实例，通过port区分
+   2)可执行程序就一份，但是内存中未来的多个实例需要各自的配置文件和持久化目录等自愿
+   3)service redis_6379 start/stop/status  > linux  /etc/init.d/*****
+   4)脚本会默认启动本次安装的redis实例
+ps -fe | grep redis
+
 
 二进制安全:
 1.redis进行与外界交互得时候永远都是字节数组，只拿字节流

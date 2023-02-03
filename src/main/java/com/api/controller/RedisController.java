@@ -1,25 +1,24 @@
-package com.module.redis;
+package com.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.module.redis.Person;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.hash.Jackson2HashMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.Map;
 
-@Component
-public class RedisDemo {
-
-
-    @Resource
-    RedisTemplate redisTemplate;
+@RestController
+public class RedisController {
 
     @Resource
     @Qualifier("ooxx")
     StringRedisTemplate stringRedisTemplate;
+    @Resource
+    RedisTemplate redisTemplate;
     @Resource
     ObjectMapper objectMapper;
 
