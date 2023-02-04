@@ -1,7 +1,6 @@
 package com;
 
 import com.api.controller.RedisController;
-import com.module.redis.RedisDemo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

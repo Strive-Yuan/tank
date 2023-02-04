@@ -13,7 +13,6 @@ import static com.api.configuration.CorsConfigConstant.*;
 public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        System.out.println("CorsConfig自动装配到spring容器中。。。");
         // 添加映射路径
         registry
                 .addMapping(ADD_MAPPING)

@@ -1,55 +1,45 @@
 package com.api.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.module.redis.Person;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.data.redis.hash.Jackson2HashMapper;
+import org.redisson.api.*;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 public class RedisController {
 
+
     @Resource
-    @Qualifier("ooxx")
-    StringRedisTemplate stringRedisTemplate;
-    @Resource
-    RedisTemplate redisTemplate;
-    @Resource
-    ObjectMapper objectMapper;
+    private RedissonClient redissonClient;
 
     public void setString() {
-        System.out.println(1111);
-//        System.out.println(stringRedisTemplate);
-//        stringRedisTemplate.opsForValue().set("hello", "帅啊！");
-//        stringRedisTemplate.opsForValue().set("hello1", "12");
-//        System.out.println(Objects.requireNonNull(stringRedisTemplate.opsForValue().get("hello")).toString());
+        System.out.println("进入redis测试~");
+        var bucket = redissonClient.getBucket("token");
+        bucket.set("我是token", 10, TimeUnit.HOURS);
 
-//        RedisConnection connection = redisTemplate.getConnectionFactory().getConnection();
-//        connection.set("hello2".getBytes(),"666".getBytes());
-//        System.out.println(new String(connection.get("hello2".getBytes())));
-//
-//
-//        HashOperations<String, Object, Object> hash = stringRedisTemplate.opsForHash();
-//        hash.put("sean","name","zhangsan");
-//        hash.put("sean","age","22");
-//
-//        System.out.println(hash.entries("sean"));
+        var anyList = redissonClient.getList("anyList");
+        anyList.add("value1");
 
-        Jackson2HashMapper jm = new Jackson2HashMapper(objectMapper, false);
+        var anySet = redissonClient.getSet("anySet");
+        anySet.addAsync("value1");
 
-        Person person = new Person();
-        person.setName("马超");
-        person.setAge(18);
+        var anySortedSet = redissonClient.getSortedSet("sset");
+        anySortedSet.add("value1");
+        anySortedSet.add("value2");
+        anySortedSet.readAll().forEach(System.out::println);
+        RScoredSortedSet<Object> zset = redissonClient.getScoredSortedSet("zset");
+        zset.add(80,"aaa");
+        zset.add(90,"bbb");
 
-        redisTemplate.opsForHash().putAll("sean01", jm.toHash(person));
-        Map map = redisTemplate.opsForHash().entries("sean01");
-        Person person1 = objectMapper.convertValue(map, Person.class);
-        System.out.println(person1.getName());
-        System.out.println(person1.getAge());
+
+        var anyMap = redissonClient.getMap("anyMap");
+        anyMap.put("key1", "value1");
+        anyMap.putAsync("key2", "value2");
+        anyMap.fastPut("key3", "value3");
+
+        anyMap.forEach((k, v) -> {
+            System.out.println("k:" + k + "   v:" + v);
+        });
     }
 }
