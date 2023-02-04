@@ -3,9 +3,9 @@ server:
 spring:
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://101.43.98.156:3306/hub
-        username: root
-        password: yjhui
+        url:
+        username:
+        password:
 redisson:
-    address: redis://101.43.98.156:6379
-    password: 123456
+    address:
+    password:
