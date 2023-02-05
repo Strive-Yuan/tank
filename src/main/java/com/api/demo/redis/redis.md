@@ -1,4 +1,4 @@
-com.module.redis
+com.api.demo.redis
 Redis安装
 1.make 
   -yum install gcc 安装C的编译器

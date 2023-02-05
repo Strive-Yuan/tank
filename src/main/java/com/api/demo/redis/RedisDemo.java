@@ -1,13 +1,16 @@
-package com.api.controller;
+package com.api.demo.redis;
 
 import org.redisson.api.*;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-@RestController
-public class RedisController {
+@Component
+public class RedisDemo {
 
 
     @Resource
@@ -23,6 +26,11 @@ public class RedisController {
 
         var anySet = redissonClient.getSet("anySet");
         anySet.addAsync("value1");
+
+        Set<Object> objects = new HashSet<>();
+        objects.add("s");
+        objects.forEach(System.out::println);
+        objects.forEach(System.out::println);
 
         var anySortedSet = redissonClient.getSortedSet("sset");
         anySortedSet.add("value1");
