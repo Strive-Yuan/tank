@@ -23,6 +23,9 @@ dependencies {
 //    implementation 'org.redisson:redisson-spring-boot-starter:3.16.8'
 //    implementation group: 'org.springframework.security', name: 'spring-security-crypto'
 
+    //quartz
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+
     //mybaits
     implementation group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.4.3.1'
 

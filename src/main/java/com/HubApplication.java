@@ -1,6 +1,8 @@
 package com;
 
 import com.api.demo.redis.RedisDemo;
+import com.api.quartz.QuartzDemo;
+import org.quartz.utils.DBConnectionManager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
