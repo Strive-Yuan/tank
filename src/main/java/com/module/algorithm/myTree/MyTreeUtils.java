@@ -51,13 +51,13 @@ public class MyTreeUtils {
     }
 
     public static TreeNode getTree() {
-        TreeNode treeNode = new TreeNode(3);
-        treeNode.left = new TreeNode(9);
-        treeNode.right = new TreeNode(20);
+        TreeNode treeNode = new TreeNode(2);
+//        treeNode.left = new TreeNode(1);
+//        treeNode.right = new TreeNode(3);
 //        treeNode.left.left = new TreeNode(4);
 //        treeNode.left.right = new TreeNode(5);
-        treeNode.right.left = new TreeNode(15);
-        treeNode.right.right = new TreeNode(7);
+//        treeNode.right.left = new TreeNode(3);
+//        treeNode.right.right = new TreeNode(6);
 //        treeNode.right.left.left = new TreeNode(8);
 //        treeNode.right.left.right = new TreeNode(9);
 //        treeNode.right.left.left.left = new TreeNode(10);
