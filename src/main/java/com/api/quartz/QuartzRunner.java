@@ -1,19 +1,18 @@
 package com.api.quartz;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
 @Component
-public class QuartzRunner implements ApplicationRunner {
+public class QuartzRunner implements CommandLineRunner {
 
     @Resource
     QuartzScheduler quartzScheduler;
 
     @Override
-    public void run(ApplicationArguments args) {
+    public void run(String... args) throws Exception {
         quartzScheduler.quart();
     }
 }
