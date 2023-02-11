@@ -1,5 +1,8 @@
 package com.module.DesignMode.observer.push;
 
+/**
+ * 观察者模式测试程序
+ */
 public class WeatherStation {
 
     public static void main(String[] args) {

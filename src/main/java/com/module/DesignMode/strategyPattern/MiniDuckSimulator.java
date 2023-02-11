@@ -1,5 +1,8 @@
 package com.module.DesignMode.strategyPattern;
 
+/**
+ * 策略模式
+ */
 public class MiniDuckSimulator {
     public static void main(String[] args) {
         Duck mallard = new MallardDuck();
