@@ -1,4 +1,4 @@
-package com.module.DesignMode.StrategyPattern;
+package com.module.DesignMode.strategyPattern;
 
 public class MallardDuck extends Duck {
     public MallardDuck() {

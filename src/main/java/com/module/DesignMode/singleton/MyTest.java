@@ -1,4 +1,4 @@
-package com.module.DesignMode.Singleton;
+package com.module.DesignMode.singleton;
 
 import java.math.BigDecimal;
 import java.util.concurrent.locks.ReentrantLock;

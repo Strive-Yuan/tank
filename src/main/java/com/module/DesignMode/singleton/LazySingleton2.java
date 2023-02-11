@@ -1,4 +1,4 @@
-package com.module.DesignMode.Singleton;
+package com.module.DesignMode.singleton;
 
 /**
  * 懒汉式
