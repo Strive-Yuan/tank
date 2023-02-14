@@ -14,23 +14,22 @@ import java.util.Properties;
 @Configuration
 public class QuartzConfig {
 
-    @Bean
-    public Properties properties() throws IOException {
-        PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        // 对quartz.properties文件进行读取
-        propertiesFactoryBean.setLocation(new ClassPathResource("/application.yml"));
-        // 在quartz.properties中的属性被读取并注入后再初始化对象
-        propertiesFactoryBean.afterPropertiesSet();
-        return propertiesFactoryBean.getObject();
-    }
-
-    @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(Properties properties) throws IOException {
+    @Bean(name = "schedulerFactory")
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        schedulerFactoryBean.setQuartzProperties(properties);
+        // 设置自行启动
+        //schedulerFactoryBean.setAutoStartup(false);
+//        schedulerFactoryBean.setJobFactory(jobFactory);
+        schedulerFactoryBean.setOverwriteExistingJobs(true);
+        // 延时启动
+        schedulerFactoryBean.setStartupDelay(1);
         return schedulerFactoryBean;
     }
 
+    @Bean(name = "scheduler")
+    public Scheduler scheduler() throws IOException {
+        return schedulerFactoryBean().getScheduler();
+    }
     /*
      * quartz初始化监听器
      */
