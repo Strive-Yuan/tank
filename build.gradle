@@ -36,6 +36,8 @@ dependencies {
     //logger
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.30'
 
+    //zookeeper
+    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: '3.4.6'
 
     // Redisson
     implementation(group: 'org.redisson', name: 'redisson', version: '3.16.8') {
