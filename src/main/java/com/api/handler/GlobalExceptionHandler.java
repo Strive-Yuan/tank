@@ -21,8 +21,6 @@ import java.util.List;
 /**
  * 自定义错误处理器，除了授权只要请求服务器成功，就返回200，错误根据错误码前端进行处理
  *
- * @author FrozenWatermelon
- * @date 2020/7/11
  */
 @RestController
 @RestControllerAdvice

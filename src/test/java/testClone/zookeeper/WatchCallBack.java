@@ -42,7 +42,7 @@ public class WatchCallBack implements Watcher, AsyncCallback.StatCallback, Async
     public void process(WatchedEvent event) {
         switch (event.getType()) {
             case None -> {
-            }
+            } 
             case NodeCreated -> {
                 zk.getData("/AppConf", this, this, "sfps");
             }

@@ -1,6 +1,6 @@
 kafka
 zookeeper:只是分布式协调
-broker:kafka自有的一个角色，可以理解为就像java中jvm，是一个进程
+broker:kafka自有的一个角色，可以理解为就像java中jvm，是一个进程(物理进程)
        broker去zookeeper中抢锁，抢到所得就是controller
 ![](../../../resources/kafka/broker.png)
 

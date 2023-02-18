@@ -1,9 +1,5 @@
 package com.api.response;
 
-/**
- * @author FrozenWatermelon
- * @date 2020/7/9
- */
 public enum ResponseEnum {
 
 	/**
