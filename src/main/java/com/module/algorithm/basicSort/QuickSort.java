@@ -1,14 +1,25 @@
 package com.module.algorithm.basicSort;
 
+import java.util.Stack;
+
 public class QuickSort {
 
     public static void main(String[] args) {
 //        int[] arr = {3, 6, 7, 9, 8};
 //        int[] arr = {3, 6, 7, 2, 9, 1, 8, 5, 7, 6};
         int[] arr = {3, 5, 2, 1, 6, 6, 9, 7, 7, 8};
+        //递归版本
         quickSort(arr);
-        System.out.println("-------------------排序完成-------------------");
+        System.out.println("-------------------递归版本排序完成-------------------");
         for (int i : arr) {
+            System.out.print(" " + i);
+        }
+        System.out.println();
+        System.out.println("********************************************************");
+        int[] arr1 = {3, 5, 2, 1, 6, 6, 9, 7, 7, 8};
+        quickSort2(arr1);
+        System.out.println("-------------------非递归版本排序完成-------------------");
+        for (int i : arr1) {
             System.out.print(" " + i);
         }
     }
@@ -60,4 +71,41 @@ public class QuickSort {
         arr[i] = arr[j];
         arr[j] = temp;
     }
+
+
+    /**
+     * 快速排序(非递归版本)
+     */
+    public static void quickSort2(int[] arr) {
+        if (arr == null || arr.length < 2) {
+            return;
+        }
+        Stack<Job> stack = new Stack<>();
+        stack.push(new Job(0, arr.length - 1));
+        while (!stack.isEmpty()) {
+            Job job = stack.pop();
+            int[] equalsRegion = partition(arr, job.left, job.right);
+            //有左区间
+            if (equalsRegion[0] > job.left) {
+                stack.push(new Job(job.left, equalsRegion[0] - 1));
+            }
+            //有右区间
+            if (equalsRegion[0] < job.left) {
+                stack.push(new Job(equalsRegion[1] + 1, job.right));
+            }
+        }
+
+    }
+
+    public static class Job {
+        int left;
+        int right;
+
+        public Job(int left, int right) {
+            this.left = left;
+            this.right = right;
+        }
+    }
+
+
 }
