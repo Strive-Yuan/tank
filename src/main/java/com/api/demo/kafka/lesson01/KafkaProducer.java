@@ -25,6 +25,7 @@ public class KafkaProducer {
         //kafka 是一个app: 可以使用零拷贝，sendfile系统调用实现快速数据消费
         properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName()); //编解码器暂时先用默认的
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+//        properties.setProperty(ProducerConfig.ACKS_CONFIG, "1");
         org.apache.kafka.clients.producer.KafkaProducer<String, String> producer = new org.apache.kafka.clients.producer.KafkaProducer<>(properties);
         //此时的producer是一个提供者，面向的是broker,虽然我们使用的时候希望吧数据打到topic，此时还没关联起来
 
