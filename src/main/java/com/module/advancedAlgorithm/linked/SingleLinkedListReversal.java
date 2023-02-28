@@ -30,7 +30,6 @@ public class SingleLinkedListReversal {
             root.next = cur;
             cur = root;
             root = next;
-
         }
         return cur;
     }
