@@ -2,10 +2,10 @@ server:
     port: 9090
 spring:
     datasource:
-        driver-class-name:
-        url:
-        username:
-        password:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://101.43.98.156:3306/hub
+        username: root
+        password: yjhui
     quartz:
         # quartz任务存储类型：jdbc或memory
         job-store-type: jdbc
@@ -35,5 +35,5 @@ spring:
                         threadPriority: 5
                         threadsInheritContextClassLoaderOfInitializingThread: true
 redisson:
-    address:
-    password:
+    address: redis://101.43.98.156:6379
+    password: 123456
