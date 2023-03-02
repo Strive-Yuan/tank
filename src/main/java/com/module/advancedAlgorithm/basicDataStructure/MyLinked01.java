@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.linked;
+package com.module.advancedAlgorithm.basicDataStructure;
 
 /**
  * 链表中删除指定值
