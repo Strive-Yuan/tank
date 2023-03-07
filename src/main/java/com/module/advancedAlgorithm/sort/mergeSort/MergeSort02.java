@@ -1,5 +1,9 @@
-package com.module.advancedAlgorithm.sort;
+package com.module.advancedAlgorithm.sort.mergeSort;
 
+/**
+ * 归并排序(非递归)
+ */
+import com.module.advancedAlgorithm.sort.ArrayUtils;
 
 public class MergeSort02 {
 

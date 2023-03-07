@@ -1,38 +1,30 @@
-package com.module.advancedAlgorithm.sort;
-
-import java.util.Arrays;
+package com.module.advancedAlgorithm.sort.mergeSort;
 
 /**
- * 在一个数组中某个数左边的数比他本身乘2还大
- * 本题测试链接 : https://leetcode.com/problems/reverse-pairs/
+ * 小和
+ * 每个元素左边比它本身小的元素之和 的汇总和
  */
-public class BiggerThanRightTwice {
+public class SmallSum {
 
+    // for test
     public static void main(String[] args) {
-        int[] arr = {18, 5, 6, 17, 2};
-        System.out.println("BiggerThanRightTwice:" + biggerThanRightTwice(arr) + "个");
-        Arrays.stream(arr).forEach(num -> System.out.print(" " + num));
-
         int testTime = 500000;
         int maxSize = 100;
         int maxValue = 100;
-        System.out.println();
-        System.out.println("测试开始");
+        boolean succeed = true;
         for (int i = 0; i < testTime; i++) {
             int[] arr1 = generateRandomArray(maxSize, maxValue);
             int[] arr2 = copyArray(arr1);
-            if (biggerThanRightTwice(arr1) != comparator(arr2)) {
-                System.out.println("Oops!");
+            if (smallSum(arr1) != comparator(arr2)) {
+                succeed = false;
                 printArray(arr1);
                 printArray(arr2);
                 break;
             }
         }
-        System.out.println("测试结束");
-
+        System.out.println(succeed ? "Nice!" : "Fucking fucked!");
     }
-
-    private static int biggerThanRightTwice(int[] arr) {
+    public static int smallSum(int[] arr) {
         if (arr == null || arr.length < 2) {
             return 0;
         }
@@ -44,56 +36,50 @@ public class BiggerThanRightTwice {
             return 0;
         }
         int middle = start + ((end - start) >> 1);
-        int leftGroupNum = process(arr, start, middle);
-        int rightGroupNum = process(arr, middle + 1, end);
-        int mergeNum = merge(arr, start, middle, end);
-        return leftGroupNum + rightGroupNum + mergeNum;
+        int leftSmallSum = process(arr, start, middle);
+        int rightSmallSum = process(arr, middle + 1, end);
+        int merge = merge(arr, start, middle, end);
+        return leftSmallSum + rightSmallSum + merge;
     }
 
     private static int merge(int[] arr, int start, int middle, int end) {
-        int rightTemp = middle + 1;
-        int ans = 0;
-        for (int i = start; i <= middle; i++) {
-            while (rightTemp <= end && arr[i] <= arr[rightTemp] * 2) {
-                rightTemp++;
-            }
-            ans += (end - rightTemp + 1);
-        }
+        int smallSum = 0;
         int[] help = new int[end - start + 1];
-        int leftGroupIndex = start;
-        int rightGroupIndex = middle + 1;
+        int leftStartIndex = start;
+        int rightStartIndex = middle + 1;
         int helpIndex = 0;
-        while (leftGroupIndex <= middle && rightGroupIndex <= end) {
-            help[helpIndex++] = arr[leftGroupIndex] < arr[rightGroupIndex] ? arr[rightGroupIndex++] : arr[leftGroupIndex++];
+        while (leftStartIndex <= middle && rightStartIndex <= end) {
+            smallSum += arr[leftStartIndex] < arr[rightStartIndex] ?  (end - rightStartIndex + 1) * arr[leftStartIndex]:0 ;
+            help[helpIndex++] = arr[leftStartIndex] < arr[rightStartIndex] ? arr[leftStartIndex++] : arr[rightStartIndex++];
         }
-        while (leftGroupIndex <= middle) {
-            help[helpIndex++] = arr[leftGroupIndex++];
+        while (leftStartIndex <= middle) {
+            help[helpIndex++] = arr[leftStartIndex++];
         }
-        while (rightGroupIndex <= end) {
-            help[helpIndex++] = arr[rightGroupIndex++];
+        while (rightStartIndex <= end) {
+            help[helpIndex++] = arr[rightStartIndex++];
         }
         System.arraycopy(help, 0, arr, start, help.length);
-        return ans;
+        return smallSum;
     }
 
-    // for test
     public static int comparator(int[] arr) {
-        int ans = 0;
-        for (int i = 0; i < arr.length; i++) {
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[i] > (arr[j] << 1)) {
-                    ans++;
-                }
+        if (arr == null || arr.length < 2) {
+            return 0;
+        }
+        int res = 0;
+        for (int i = 1; i < arr.length; i++) {
+            for (int j = 0; j < i; j++) {
+                res += arr[j] < arr[i] ? arr[j] : 0;
             }
         }
-        return ans;
+        return res;
     }
 
     // for test
     public static int[] generateRandomArray(int maxSize, int maxValue) {
         int[] arr = new int[(int) ((maxSize + 1) * Math.random())];
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) ((maxValue + 1) * Math.random());
+            arr[i] = (int) ((maxValue + 1) * Math.random()) - (int) (maxValue * Math.random());
         }
         return arr;
     }
@@ -139,4 +125,6 @@ public class BiggerThanRightTwice {
         }
         System.out.println();
     }
+
+
 }

@@ -1,5 +1,7 @@
-package com.module.advancedAlgorithm.sort;
+package com.module.advancedAlgorithm.sort.mergeSort;
 
+
+import com.module.advancedAlgorithm.sort.ArrayUtils;
 
 /**
  * 逆序对

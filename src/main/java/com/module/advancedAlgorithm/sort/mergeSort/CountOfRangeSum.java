@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.sort;
+package com.module.advancedAlgorithm.sort.mergeSort;
 
 /**
  * 给定一个数组arr,两个数lower和upper
