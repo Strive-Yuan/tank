@@ -4,6 +4,9 @@ import com.module.advancedAlgorithm.sort.ArrayUtils;
 
 import java.util.Arrays;
 
+/**
+ * 小根堆
+ */
 public class MyMinHeap {
     public final int[] heap;
     public final int limit;
@@ -36,18 +39,30 @@ public class MyMinHeap {
     }
 
     public static void main(String[] args) {
-        System.out.println((-1) / 2);
-        System.out.println((-1) >>> 1);
-        System.out.println((-1) >> 1);
         MyMinHeap myMinHeap = new MyMinHeap(6);
         int[] arr = {56, 27, -94, 37, 26, -11};
         for (int i : arr) {
             myMinHeap.push(i);
         }
+
+//        while (myMinHeap.heap.length > 0) {
+//            System.out.println(myMinHeap.poll());
+//        }
         System.out.println("----------------小根堆----------------");
         Arrays.stream(myMinHeap.heap).forEach(num -> System.out.print(" " + num));
         System.out.println();
-
+        System.out.println("-------------- " + "取出:" + myMinHeap.poll() + "----长度:" + myMinHeap.heapSize + "------------------");
+        Arrays.stream(myMinHeap.heap).forEach(num -> System.out.print(" " + num));
+        System.out.println();
+        System.out.println("-------------- " + "取出:" + myMinHeap.poll() + "----长度:" + myMinHeap.heapSize + "------------------");
+        Arrays.stream(myMinHeap.heap).forEach(num -> System.out.print(" " + num));
+        System.out.println();
+        System.out.println("-------------- " + "取出:" + myMinHeap.poll() + "----长度:" + myMinHeap.heapSize + "------------------");
+        Arrays.stream(myMinHeap.heap).forEach(num -> System.out.print(" " + num));
+        System.out.println();
+        System.out.println("-------------- " + "取出:" + myMinHeap.poll() + "----长度:" + myMinHeap.heapSize + "------------------");
+        Arrays.stream(myMinHeap.heap).forEach(num -> System.out.print(" " + num));
+        System.out.println();
         System.out.println("-------------- " + "取出:" + myMinHeap.poll() + "----长度:" + myMinHeap.heapSize + "------------------");
         Arrays.stream(myMinHeap.heap).forEach(num -> System.out.print(" " + num));
         System.out.println();
@@ -62,10 +77,17 @@ public class MyMinHeap {
         //左子树
         int leftTree = 1;
         while (curIndex < tempHeapSize && (heap[curIndex] > heap[leftTree] || heap[curIndex] > heap[leftTree + 1])) {
-            if (leftTree + 1 > heapSize) {
+            if (leftTree + 1 > tempHeapSize) {
                 break;
             }
-            int minChildIndex = heap[leftTree] < heap[leftTree + 1] ? leftTree : leftTree + 1;
+            //是否存在右树
+            int minChildIndex;
+            if (leftTree + 1 < heapSize) {
+                minChildIndex = heap[leftTree] < heap[leftTree + 1] ? leftTree : leftTree + 1;
+            } else {
+                minChildIndex = leftTree;
+            }
+
             int targetIndex = heap[curIndex] < heap[minChildIndex] ? curIndex : minChildIndex;
             if (targetIndex == curIndex) {
                 break;
@@ -78,7 +100,7 @@ public class MyMinHeap {
     }
 
     public int poll() {
-        if (heapSize < 0) {
+        if (heapSize <= 0) {
             throw new RuntimeException("已经没了,快上一边去!");
         }
         int temp = heap[0];
