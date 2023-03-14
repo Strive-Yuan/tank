@@ -1,8 +1,9 @@
 package com.module.advancedAlgorithm.sort.HeapSort;
 
-import com.module.advancedAlgorithm.sort.ArrayUtils;
 
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 /**
  * 最大限度an重合问题(用堆的实现)
@@ -14,82 +15,118 @@ import java.util.Arrays;
  * 返回线段最多重合区域中，包含了几条线段
  */
 public class HeapSort03 {
-    public static class MyHeap {
-        public int[] heap;
-        public int limit;
-        public int heapSize;
+    public static class Line {
+        public int start;
+        public int end;
 
-        public MyHeap(int limit) {
-            this.heap = new int[limit];
-            this.limit = limit;
-            this.heapSize = 0;
+        public Line(int s, int e) {
+            start = s;
+            end = e;
         }
+    }
 
-        public void push(int value) {
-            if (heapSize == limit) {
-                System.out.println("满了，扔了");
-                return;
-            }
-            //将元素放入数组
-            heap[heapSize++] = value;
-            //调整堆
-            heapInsert();
+    public static int maxCover(int[][] segment) {
+        Line[] lines = new Line[segment.length];
+        for (int i = 0; i < segment.length; i++) {
+            lines[i] = new Line(segment[i][0], segment[i][1]);
         }
-
-        private void heapInsert() {
-            //当前位置
-            int curIndex = heapSize - 1;
-            int parentIndex = (curIndex - 1) / 2;
-            while (curIndex > 0 && heap[curIndex] > heap[parentIndex]) {
-                ArrayUtils.swap(heap, curIndex, parentIndex);
-                curIndex = parentIndex;
-                parentIndex = (curIndex - 1) / 2;
+        Arrays.sort(lines, Comparator.comparingInt(o -> o.start));
+        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        int max = 0;
+        for (Line line : lines) {
+            while (!heap.isEmpty() && heap.peek() <= line.start) {
+                heap.poll();
             }
+            heap.add(line.end);
+            max = Math.max(heap.size(), max);
         }
+        return max;
+    }
 
-        public int poll() {
-            if (heapSize <= 0) {
-                throw new RuntimeException("空了，无了");
+
+    public static int[][] generateLines(int N, int L, int R) {
+        int size = (int) (Math.random() * N) + 1;
+        int[][] ans = new int[size][2];
+        for (int i = 0; i < size; i++) {
+            int a = L + (int) (Math.random() * (R - L + 1));
+            int b = L + (int) (Math.random() * (R - L + 1));
+            if (a == b) {
+                b = a + 1;
             }
-            int temp = heap[0];
-            ArrayUtils.swap(heap, 0, --heapSize);
-            heapIfy();
-            return temp;
+            ans[i][0] = Math.min(a, b);
+            ans[i][1] = Math.max(a, b);
         }
+        return ans;
+    }
 
-        private void heapIfy() {
-            int curIndex = 0;
-            int leftChild = 1;
-            while (leftChild < heapSize) { //右子树可能有可能没有
-                //如果存在右子树，并且右子树的值大则返回右子树索引，否则返回左子树
-                int maxIndex = leftChild + 1 < heapSize && heap[leftChild] < heap[leftChild + 1] ? leftChild + 1 : leftChild;
-                //找到较大值的索引
-                int targetIndex = heap[curIndex] > heap[maxIndex] ? curIndex : maxIndex;
-                //如果是自己则不动
-                if (curIndex == targetIndex) {
-                    return;
-                }
-                ArrayUtils.swap(heap, curIndex, targetIndex);
-                curIndex = targetIndex;
-                leftChild = curIndex * 2 + 1;
-            }
+    public static class StartComparator implements Comparator<Line> {
+
+        @Override
+        public int compare(Line o1, Line o2) {
+            return o1.start - o2.start;
         }
 
     }
 
     public static void main(String[] args) {
-        MyHeap myHeap = new MyHeap(6);
-        myHeap.push(2);
-        myHeap.push(6);
-        myHeap.push(3);
-        myHeap.push(9);
-        myHeap.push(13);
-        System.out.println("----------------堆排后----------------");
-        Arrays.stream(myHeap.heap).forEach(num -> System.out.print(" " + num));
-        System.out.println();
 
-        while (myHeap.heapSize > 0) {
-            System.out.println(myHeap.poll());
+//        Line l1 = new Line(4, 9);
+//        Line l2 = new Line(1, 4);
+//        Line l3 = new Line(7, 15);
+//        Line l4 = new Line(2, 4);
+//        Line l5 = new Line(4, 6);
+//        Line l6 = new Line(3, 7);
+//
+//        // 底层堆结构，heap
+//        PriorityQueue<Line> heap = new PriorityQueue<>(new StartComparator());
+//        heap.add(l1);
+//        heap.add(l2);
+//        heap.add(l3);
+//        heap.add(l4);
+//        heap.add(l5);
+//        heap.add(l6);
+//
+//        while (!heap.isEmpty()) {
+//            Line cur = heap.poll();
+//            System.out.println(cur.start + "," + cur.end);
+//        }
+
+        System.out.println("test begin");
+        int N = 100;
+        int L = 0;
+        int R = 200;
+        int testTimes = 200000;
+        for (int i = 0; i < testTimes; i++) {
+            int[][] lines = generateLines(N, L, R);
+            int ans1 = maxCover(lines);
+            int ans2 = maxCover2(lines);
+            System.out.println("me:" + ans1 + "   ans:" + ans2);
+            if (ans1 != ans2) {
+                System.out.println("Oops!");
+                break;
+            }
         }
+        System.out.println("test end");
+    }
+
+
+    public static int maxCover2(int[][] m) {
+        Line[] lines = new Line[m.length];
+        for (int i = 0; i < m.length; i++) {
+            lines[i] = new Line(m[i][0], m[i][1]);
+        }
+        Arrays.sort(lines, new StartComparator());
+        // 小根堆，每一条线段的结尾数值，使用默认的
+        PriorityQueue<Integer> heap = new PriorityQueue<>();
+        int max = 0;
+        for (int i = 0; i < lines.length; i++) {
+            // lines[i] -> cur 在黑盒中，把<=cur.start 东西都弹出
+            while (!heap.isEmpty() && heap.peek() <= lines[i].start) {
+                heap.poll();
+            }
+            heap.add(lines[i].end);
+            max = Math.max(max, heap.size());
+        }
+        return max;
     }
 }
