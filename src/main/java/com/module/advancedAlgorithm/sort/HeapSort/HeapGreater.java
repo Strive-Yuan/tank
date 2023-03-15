@@ -23,21 +23,26 @@ public class HeapGreater<Inner> {
         this.comp = comp;
     }
 
+    public boolean isEmpty() {
+        return heapSize == 0;
+    }
+
+    public int size() {
+        return heapSize;
+    }
+
     public void push(Inner inner) {
         //加入堆中
         heap.add(inner);
         //记录元素位置，加入索引表
         indexMap.put(inner, heapSize);
         //维护堆结构
-        heapInsert();
+        heapInsert(heapSize);
         //堆长度+1
         heapSize++;
     }
 
     public Inner poll() {
-        if (heap.isEmpty()) {
-            System.out.println("无了，无了");
-        }
         //在堆中移除此元素
         Inner ans = heap.get(0);
         heap.remove(0);
@@ -53,7 +58,20 @@ public class HeapGreater<Inner> {
      * 移除堆中某元素
      */
     public void remove(Inner inner) {
+        Inner replace = heap.get(heapSize - 1);
+        //从索引表中取出此元素
+        Integer index = indexMap.get(inner);
+        indexMap.remove(inner);
+        if (inner != replace) {
+            heap.set(index, replace);
+            indexMap.put(replace, index);
+            resign(replace);
+        }
+    }
 
+    public void resign(Inner inner) {
+        heapInsert(indexMap.get(inner));
+        heapIfy(indexMap.get(inner));
     }
 
     private void heapIfy(int curIndex) {
@@ -79,8 +97,7 @@ public class HeapGreater<Inner> {
     /**
      * 添加元素时，调整维护堆结构
      */
-    private void heapInsert() {
-        int curIndex = heapSize;
+    private void heapInsert(int curIndex) {
         while (comp.compare(heap.get(curIndex), heap.get((curIndex - 1) / 2)) > 0) {
             swap(curIndex, (curIndex - 1) / 2);
             curIndex = (curIndex - 1) / 2;
