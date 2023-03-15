@@ -7,7 +7,7 @@ import java.util.List;
 
 /*
  * T一定要是非基础类型，有基础类型需求包一层
- * 一定正确版
+ * （答案）
  */
 public class HeapGreater01<T> {
 
