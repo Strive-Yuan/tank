@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.sort.trieTree;
+package com.module.advancedAlgorithm.trieTree;
 
 import java.util.HashMap;
 
@@ -9,7 +9,7 @@ public class TrieTree {
     TrieTreeNode root;
 
     public TrieTree() {
-        this.root = new TrieTreeNode();
+        root = new TrieTreeNode();
     }
 
     public static void main(String[] args) {
@@ -137,7 +137,7 @@ public class TrieTree {
     }
 
 
-    public static class TrieTreeNode {
+     public static class TrieTreeNode {
         public int pass;
         public int end;
         public TrieTreeNode[] nextArr;
