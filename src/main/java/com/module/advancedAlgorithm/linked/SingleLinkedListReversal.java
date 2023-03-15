@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.basicDataStructure;
+package com.module.advancedAlgorithm.linked;
 
 import java.util.Iterator;
 

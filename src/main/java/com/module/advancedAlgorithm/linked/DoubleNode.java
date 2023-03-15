@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.basicDataStructure;
+package com.module.advancedAlgorithm.linked;
 
 public class DoubleNode {
     public Integer value;

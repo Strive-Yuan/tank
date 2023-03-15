@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.basicDataStructure;
+package com.module.advancedAlgorithm.linked;
 
 public class DoubleLinkedListReversal {
     public static void main(String[] args) {

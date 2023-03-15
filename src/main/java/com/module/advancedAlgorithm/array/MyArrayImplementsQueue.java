@@ -1,4 +1,4 @@
-package com.module.advancedAlgorithm.basicDataStructure;
+package com.module.advancedAlgorithm.array;
 
 /**
  * 数组实现栈,数组实现队列
