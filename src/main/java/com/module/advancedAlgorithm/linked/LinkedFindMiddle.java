@@ -22,7 +22,7 @@ public class LinkedFindMiddle {
      * 快慢指针
      * 1）输入链表头节点，奇数长度返回中点，偶数长度返回上中点
      */
-    private static Node findMiddle01(Node root) {
+    public static Node findMiddle01(Node root) {
         if (root == null) {
             return root;
         }
