@@ -62,6 +62,8 @@ kafka-consumer-groups.sh  --bootstrap-server localhost:9092 --describe --group m
 1.acks配置：用来保证发送数据的可靠性
        0：消息发出即完成(在极其追求性能时使用)，没有保证数据的持久化
        1：默认值，消息发出并在磁盘持久化
+          highWaterMark(HW):consumer可以消费的数据的位置
+          logEndOffset(LEO):生产者会一直生产数据，LEO代表最后一条数据的位置
       -1：分布式，最严苛，所有的副本都要同步（一致）
           例：当有3个broker，1为leader，2和3为follower,当ack=-1时，要求所有的副本同步，当2同步成功3同步失败时，1和2为ISR
               3为OSR
