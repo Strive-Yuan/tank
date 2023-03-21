@@ -10,6 +10,10 @@ version '1.0-SNAPSHOT'
 repositories {
     mavenCentral()
 }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17 // 指定项目使用的JDK版本
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 //gradle文档:https://docs.gradle.org/current/userguide/userguide.html
 dependencies {
