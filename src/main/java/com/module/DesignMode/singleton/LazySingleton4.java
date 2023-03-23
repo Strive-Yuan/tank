@@ -1,6 +1,10 @@
 package com.module.DesignMode.singleton;
 
 
+import com.api.pojo.User;
+
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * 懒汉式
  * 在第三种写法的基础上进行优化
