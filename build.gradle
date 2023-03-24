@@ -18,5 +18,5 @@ java {
 //gradle文档:https://docs.gradle.org/current/userguide/userguide.html
 dependencies {
     // Spring
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.0.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 }
