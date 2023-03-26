@@ -11,35 +11,44 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class PlayerTank extends Tank {
-
     public PlayerTank(int x, int y) {
         this.x = x;
         this.y = y;
+        this.width = 80;
+        this.height = 100;
         this.oldY = y;
         this.oldX = x;
         this.speed = Integer.parseInt((String) ResourceConf.props.get("player_speed"));
         this.group = Group.GOOD;
         image = ResourceMgr.playerImageMap.get(DirType.D);
+        rect = new Rectangle(x, y, this.width, this.height);
     }
 
     public PlayerTank(int x, int y, FireStrategy fireStrategy) {
         this.x = x;
         this.y = y;
+        this.width = 80;
+        this.height = 100;
         this.oldY = y;
         this.oldX = x;
         this.speed = Integer.parseInt((String) ResourceConf.props.get("player_speed"));
         this.group = Group.GOOD;
         image = ResourceMgr.playerImageMap.get(DirType.D);
+        rect = new Rectangle(x, y, this.width, this.height);
         this.fireStrategy = fireStrategy;
     }
 
     public void addBullet(Bullet bullet) {
-        TankJPanel.getInstance().bullets.add(bullet);
+        TankJPanel.getInstance().gameObjectList.add(bullet);
     }
 
     public void paintComponent(Graphics g) {
-        if (!living) return;
-        g.drawImage(image, x, y, 80, 100, null);
+        g.drawImage(image, x, y, width, height, null);
+    }
+
+    @Override
+    public boolean isLiving() {
+        return this.living;
     }
 
 

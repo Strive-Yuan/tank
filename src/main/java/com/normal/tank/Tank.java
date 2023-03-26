@@ -3,6 +3,7 @@ package com.normal.tank;
 import com.normal.DirType;
 import com.normal.FireStrategy.DefaultFireStrategy;
 import com.normal.FireStrategy.FireStrategy;
+import com.normal.GameObject;
 import com.normal.Group;
 import com.normal.TankJPanel;
 import com.normal.weapon.Bullet;
@@ -11,9 +12,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public abstract class Tank {
+public abstract class Tank implements GameObject {
     public int x;
     public int y;
+    public int width;
+    public int height;
     public int oldX;
     public int oldY;
     public DirType dirType = DirType.D;
@@ -27,6 +30,7 @@ public abstract class Tank {
     public Group group;
     public Random random = new Random();
     public FireStrategy fireStrategy = new DefaultFireStrategy();
+    public Rectangle rect;
 
     public abstract void paintComponent(Graphics g);
 
