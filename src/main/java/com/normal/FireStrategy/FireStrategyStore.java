@@ -11,4 +11,12 @@ public class FireStrategyStore {
         }
         return fireStrategy;
     }
+
+    public static FireStrategy getFireStrategy(String type) {
+        FireStrategyType fireType = FireStrategyType.getFireStrategyType(type);
+        if (fireType == null) {
+            throw new RuntimeException("开火策略配置无效！");
+        }
+        return FireStrategyStore.getFireStrategy(fireType);
+    }
 }

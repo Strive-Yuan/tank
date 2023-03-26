@@ -2,19 +2,30 @@ package com.normal.tank;
 
 import com.normal.*;
 import com.normal.FireStrategy.FireStrategy;
+import com.normal.utils.ResourceConf;
 import com.normal.utils.ResourceMgr;
 import com.normal.weapon.Bullet;
 
 import java.awt.*;
 
 public class EnemyTank extends Tank {
+    public EnemyTank(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.oldY = y;
+        this.oldX = x;
+        this.speed = Integer.parseInt((String) ResourceConf.props.get("enemy_speed"));
+        this.group = Group.BAD;
+        this.dirType = DirType.U;
+        image = ResourceMgr.enemyImageMap.get(DirType.U);
+    }
 
     public EnemyTank(int x, int y, FireStrategy fireStrategy) {
         this.x = x;
         this.y = y;
         this.oldY = y;
         this.oldX = x;
-        this.speed = 3;
+        this.speed = Integer.parseInt((String) ResourceConf.props.get("enemy_speed"));
         this.group = Group.BAD;
         this.dirType = DirType.U;
         this.fireStrategy = fireStrategy;

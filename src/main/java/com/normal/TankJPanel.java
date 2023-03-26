@@ -1,8 +1,6 @@
 package com.normal;
 
-import com.normal.FireStrategy.DefaultFireStrategy;
 import com.normal.FireStrategy.FireStrategyStore;
-import com.normal.FireStrategy.FireStrategyType;
 import com.normal.explode.Explode;
 import com.normal.tank.EnemyTank;
 import com.normal.tank.PlayerTank;
@@ -16,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 
 public class TankJPanel extends JPanel {
     private static final TankJPanel INSTANCE = new TankJPanel(800, 600);
@@ -42,8 +39,17 @@ public class TankJPanel extends JPanel {
         this.setBackground(Color.black);
         initTankConf();
         initLister();
+        initFireStrategy();
+    }
 
+    private void initFireStrategy() {
+        String playerAround = (String) ResourceConf.props.get("player_fire_strategy");
+        this.playerTank.fireStrategy = FireStrategyStore.getFireStrategy(playerAround);
 
+        String enemyAround = (String) ResourceConf.props.get("enemy_fire_strategy");
+        for (Tank enemyTank : enemyTanks) {
+            enemyTank.fireStrategy = FireStrategyStore.getFireStrategy(enemyAround);
+        }
     }
 
     private void initLister() {
@@ -53,24 +59,13 @@ public class TankJPanel extends JPanel {
     }
 
     private void initTankConf() {
-        Properties props = ResourceConf.props;
-        String playerAround = (String) props.get("player_fire_strategy");
-        FireStrategyType playerFireType = FireStrategyType.getFireStrategyType(playerAround);
-        if (playerFireType == null) {
-            throw new RuntimeException("开火策略配置无效！");
-        }
-        this.playerTank = new PlayerTank(100, 100, FireStrategyStore.getFireStrategy(playerFireType));
         this.enemyTanks = new ArrayList<>();
         this.bullets = new ArrayList<>();
         this.explodes = new ArrayList<>();
-        String enemyNum = (String) props.get("enemy_num");
-        String enemyAround = (String) props.get("enemy_fire_strategy");
-        FireStrategyType  enemyFireType = FireStrategyType.getFireStrategyType(enemyAround);
-        if (enemyFireType == null) {
-            throw new RuntimeException("开火策略配置无效！");
-        }
+        this.playerTank = new PlayerTank(100, 100);
+        String enemyNum = (String) ResourceConf.props.get("enemy_num");
         for (int i = 0; i < Integer.parseInt(enemyNum); i++) {
-            enemyTanks.add(new EnemyTank(200 + 50 * i, 200, FireStrategyStore.getFireStrategy(enemyFireType)));
+            enemyTanks.add(new EnemyTank(200 + 50 * i, 200));
         }
     }
 

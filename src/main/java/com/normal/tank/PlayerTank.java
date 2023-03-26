@@ -3,6 +3,7 @@ package com.normal.tank;
 import com.normal.*;
 import com.normal.FireStrategy.FireStrategy;
 import com.normal.utils.Audio;
+import com.normal.utils.ResourceConf;
 import com.normal.utils.ResourceMgr;
 import com.normal.weapon.Bullet;
 
@@ -11,16 +12,25 @@ import java.awt.event.KeyEvent;
 
 public class PlayerTank extends Tank {
 
+    public PlayerTank(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.oldY = y;
+        this.oldX = x;
+        this.speed = Integer.parseInt((String) ResourceConf.props.get("player_speed"));
+        this.group = Group.GOOD;
+        image = ResourceMgr.playerImageMap.get(DirType.D);
+    }
+
     public PlayerTank(int x, int y, FireStrategy fireStrategy) {
         this.x = x;
         this.y = y;
         this.oldY = y;
         this.oldX = x;
-        this.speed = 5;
+        this.speed = Integer.parseInt((String) ResourceConf.props.get("player_speed"));
         this.group = Group.GOOD;
         image = ResourceMgr.playerImageMap.get(DirType.D);
         this.fireStrategy = fireStrategy;
-
     }
 
     public void addBullet(Bullet bullet) {
