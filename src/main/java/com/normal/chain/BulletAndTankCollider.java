@@ -21,7 +21,7 @@ public class BulletAndTankCollider implements Collider {
             if (bullet.rect.intersects(tank.rect) || tank.rect.intersects(bullet.rect)) {
                 bullet.die();
                 tank.die();
-                TankJPanel.getInstance().gameObjectList.add(new FireExplode(bullet.x, bullet.y));
+                TankJPanel.getInstance().gameModel.gameObjectList.add(new FireExplode(bullet.x, bullet.y));
                 return false;
             }
         } else if (go1 instanceof Tank && go2 instanceof Bullet) {

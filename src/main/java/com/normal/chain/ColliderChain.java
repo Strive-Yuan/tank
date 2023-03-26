@@ -21,4 +21,8 @@ public class ColliderChain implements Collider {
     public void addCollider(Collider collider) {
         colliders.add(collider);
     }
+
+    public void addAllCollider(List<Collider> collider) {
+        colliders.addAll(collider);
+    }
 }

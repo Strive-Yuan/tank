@@ -6,7 +6,7 @@ public class TankFrameRunner {
         TankFrame frame = new TankFrame();
         TankJPanel tankJPanel = TankJPanel.getInstance();
         frame.add(tankJPanel);
-        frame.addKeyListener(tankJPanel.tankKeyLister);
+        frame.addKeyListener(tankJPanel.gameModel.tankKeyLister);
         frame.pack();
         frame.setVisible(true);
     }

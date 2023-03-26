@@ -39,7 +39,7 @@ public class EnemyTank extends Tank {
     }
 
     public void addBullet(Bullet bullet) {
-        TankJPanel.getInstance().gameObjectList.add(bullet);
+        TankJPanel.getInstance().gameModel.gameObjectList.add(bullet);
     }
 
     @Override

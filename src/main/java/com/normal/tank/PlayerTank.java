@@ -11,18 +11,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class PlayerTank extends Tank {
-    public PlayerTank(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.width = 80;
-        this.height = 100;
-        this.oldY = y;
-        this.oldX = x;
-        this.speed = Integer.parseInt((String) ResourceConf.props.get("player_speed"));
-        this.group = Group.GOOD;
-        image = ResourceMgr.playerImageMap.get(DirType.D);
-        rect = new Rectangle(x, y, this.width, this.height);
-    }
 
     public PlayerTank(int x, int y, FireStrategy fireStrategy) {
         this.x = x;
@@ -39,7 +27,7 @@ public class PlayerTank extends Tank {
     }
 
     public void addBullet(Bullet bullet) {
-        TankJPanel.getInstance().gameObjectList.add(bullet);
+        TankJPanel.getInstance().gameModel.gameObjectList.add(bullet);
     }
 
     public void paintComponent(Graphics g) {
