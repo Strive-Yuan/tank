@@ -53,11 +53,13 @@ public class GameModel {
             GameObject go1 = gameObjectList.get(i);
             if (!go1.isLiving()) {
                 gameObjectList.remove(i);
-                return;
-            } else {
+            }
+        }
+        for (int i = 0; i < gameObjectList.size(); i++) {
+            GameObject go1 = gameObjectList.get(i);
+            if (go1.isLiving()) {
                 go1.paintComponent(g);
             }
-
             for (int j = 0; j < gameObjectList.size(); j++) {
                 GameObject go2 = gameObjectList.get(j);
                 bulletAndTankCollider.checkCollisionDetection(go1, go2);

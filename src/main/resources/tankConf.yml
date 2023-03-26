@@ -1,6 +1,6 @@
 player_num: 1
 player_speed: 3
 player_fire_strategy: AROUND
-enemy_num: 10
+enemy_num: 1
 enemy_fire_strategy: DEFAULT
 enemy_speed: 3
