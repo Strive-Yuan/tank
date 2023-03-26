@@ -1,0 +1,4 @@
+player_num: 1
+player_fire_strategy: AROUND
+enemy_num: 5
+enemy_fire_strategy: AROUND

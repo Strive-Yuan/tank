@@ -1,13 +1,16 @@
 package com.normal;
 
+import com.normal.tank.PlayerTank;
+import com.normal.tank.Tank;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class TankKeyLister implements KeyListener {
-    public Tank tank;
+    public PlayerTank tank;
 
     public TankKeyLister(Tank tank) {
-        this.tank = tank;
+        this.tank = (PlayerTank) tank;
     }
 
     @Override
